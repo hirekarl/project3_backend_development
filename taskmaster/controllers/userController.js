@@ -8,7 +8,7 @@ const createUser = async (req, res) => {
   try {
     const foundUser = await User.findOne({ email: req.body.email })
 
-    if (!foundUser) {
+    if (foundUser) {
       return res.sendStatus(409)
     }
 
