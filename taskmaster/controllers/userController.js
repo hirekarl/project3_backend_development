@@ -22,7 +22,7 @@ const createUser = async (req, res) => {
       { expiresIn: JWT_EXPIRY },
       (error, token) => {
         if (error) throw error
-        res.status(201).json({ token })
+        res.status(201).json({ createdUser, token })
       }
     )
   } catch (error) {
@@ -52,7 +52,7 @@ const loginUser = async (req, res) => {
       { expiresIn: JWT_EXPIRY },
       (error, token) => {
         if (error) throw error
-        res.status(200).json({ token })
+        res.status(200).json({ foundUser, token })
       }
     )
   } catch (error) {
