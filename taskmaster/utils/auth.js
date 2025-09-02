@@ -25,20 +25,20 @@ const authMiddleware = (req, res, next) => {
   next()
 }
 
-const userOwnsUser = (res, req, next) => {
-  const authenticatedUserId = req.user._id
-  const requestedUserId = req.params.id
+// const userOwnsUser = (res, req, next) => {
+//   const authenticatedUserId = req.user._id
+//   const requestedUserId = req.params.id
 
-  if (String(authenticatedUserId) !== String(requestedUserId)) {
-    return res.sendStatus(403)
-  }
+//   if (String(authenticatedUserId) !== String(requestedUserId)) {
+//     return res.sendStatus(403)
+//   }
 
-  next()
-}
+//   next()
+// }
 
 const userOwnsProject = (res, req, next) => {
   const authenticatedUserId = req.user._id
-  const requestedProjectId = req.params.id
+  const requestedProjectId = req.params.id || req.params.projectId
 
   const foundProject = Project.findById(requestedProjectId)
 

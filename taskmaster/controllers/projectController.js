@@ -1,4 +1,5 @@
 const Project = require("../models/Project")
+const Task = require("../models/Task")
 
 // POST /api/projects
 const createProject = async (req, res) => {
@@ -24,9 +25,9 @@ const getAllProjects = async (req, res) => {
 
     const allProjects = Project.find({ user: authenticatedUserId })
 
-    if (allProjects.length < 1) {
-      return res.sendStatus(404)
-    }
+    // if (allProjects.length < 1) {
+    //   return res.sendStatus(404)
+    // }
 
     res.status(200).json(allProjects)
   } catch (error) {
@@ -112,6 +113,20 @@ const deleteProject = async (req, res) => {
 // POST /api/projects/:projectId/tasks
 const createTaskByProjectId = async (req, res) => {
   try {
+    const requestedProjectId = req.params.projectId
+
+    const foundProject = await Project.findById(requestedProjectId)
+
+    if (!foundProject) {
+      return res.sendStatus(404)
+    }
+
+    const newTask = await Task.create({
+      ...req.body,
+      project: requestedProjectId,
+    })
+
+    res.status(201).json(newTask)
   } catch (error) {
     console.error(error)
     res.sendStatus(500)
@@ -121,6 +136,17 @@ const createTaskByProjectId = async (req, res) => {
 // GET /api/projects/:projectId/tasks
 const getTasksByProjectId = async (req, res) => {
   try {
+    const requestedProjectId = req.params.projectId
+
+    const foundProject = await Project.findById(requestedProjectId)
+
+    if (!foundProject) {
+      return res.sendStatus(404)
+    }
+
+    const foundTasks = await Task.find({ project: requestedProjectId })
+
+    res.status(200).json(foundTasks)
   } catch (error) {
     console.error(error)
     res.sendStatus(500)
