@@ -25,11 +25,11 @@ const authMiddleware = (req, res, next) => {
   next()
 }
 
-const userOwnsProject = (res, req, next) => {
+const userOwnsProject = async (req, res, next) => {
   const authenticatedUserId = req.user._id
   const requestedProjectId = req.params.id || req.params.projectId
 
-  const foundProject = Project.findById(requestedProjectId)
+  const foundProject = await Project.findById(requestedProjectId)
 
   if (!foundProject) {
     return res.sendStatus(404)
@@ -42,17 +42,17 @@ const userOwnsProject = (res, req, next) => {
   next()
 }
 
-const userOwnsTask = (res, req, next) => {
+const userOwnsTask = async (req, res, next) => {
   const authenticatedUserId = req.user._id
-  const requestedTaskId = req.params.id
+  const requestedTaskId = req.params.id || req.params.taskId
 
-  const foundTask = Task.findById(requestedTaskId)
+  const foundTask = await Task.findById(requestedTaskId)
 
   if (!foundTask) {
     return res.sendStatus(404)
   }
 
-  const foundProject = Project.findById(foundTask.project)
+  const foundProject = await Project.findById(foundTask.project)
 
   if (!foundProject) {
     return res.sendStatus(404)

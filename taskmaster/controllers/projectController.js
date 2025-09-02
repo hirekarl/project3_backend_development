@@ -23,11 +23,7 @@ const getAllProjects = async (req, res) => {
   try {
     const authenticatedUserId = req.user._id
 
-    const allProjects = Project.find({ user: authenticatedUserId })
-
-    // if (allProjects.length < 1) {
-    //   return res.sendStatus(404)
-    // }
+    const allProjects = await Project.find({ user: authenticatedUserId })
 
     res.status(200).json(allProjects)
   } catch (error) {
