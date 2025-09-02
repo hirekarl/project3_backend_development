@@ -3,7 +3,7 @@ const express = require("express")
 const connect = require("./config/connection")
 const { PORT } = require("./utils")
 
-const routes = require("./routes/api")
+const routes = require("./routes")
 
 const run = async () => {
   await connect()
