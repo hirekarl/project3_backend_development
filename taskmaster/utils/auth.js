@@ -16,6 +16,7 @@ const authMiddleware = (req, res, next) => {
     req.user = data
   } catch (error) {
     console.error("Invalid token:", error)
+    return res.sendStatus(401)
   }
 
   next()
