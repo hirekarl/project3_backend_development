@@ -25,17 +25,6 @@ const authMiddleware = (req, res, next) => {
   next()
 }
 
-// const userOwnsUser = (res, req, next) => {
-//   const authenticatedUserId = req.user._id
-//   const requestedUserId = req.params.id
-
-//   if (String(authenticatedUserId) !== String(requestedUserId)) {
-//     return res.sendStatus(403)
-//   }
-
-//   next()
-// }
-
 const userOwnsProject = (res, req, next) => {
   const authenticatedUserId = req.user._id
   const requestedProjectId = req.params.id || req.params.projectId
@@ -76,4 +65,4 @@ const userOwnsTask = (res, req, next) => {
   next()
 }
 
-module.exports = { authMiddleware, userOwnsUser, userOwnsProject, userOwnsTask }
+module.exports = { authMiddleware, userOwnsProject, userOwnsTask }

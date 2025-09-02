@@ -21,9 +21,6 @@ const deleteTask = async (req, res) => {
 }
 
 module.exports = {
-  getAllTasks,
-  getTaskById,
-  createTask,
   updateTask,
   deleteTask,
 }
