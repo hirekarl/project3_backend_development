@@ -6,13 +6,13 @@ const updateTask = async (req, res) => {
     const requestedTaskId = req.params.taskId
 
     if (!requestedTaskId) {
-      return res.sendStatus(400)
+      return res.status(400).json({ message: "Missing task ID." })
     }
 
     const foundTask = await Task.findById(requestedTaskId)
 
     if (!foundTask) {
-      return res.sendStatus(404)
+      return res.status(404).json({ message: "Couldn't find task." })
     }
 
     const updatedTask = await Task.findByIdAndUpdate(foundTask._id, req.body, {
@@ -22,7 +22,7 @@ const updateTask = async (req, res) => {
     res.status(200).json(updatedTask)
   } catch (error) {
     console.error(error)
-    res.sendStatus(500)
+    res.status(500).json({ message: "There was a problem updating the task." })
   }
 }
 
@@ -32,20 +32,20 @@ const deleteTask = async (req, res) => {
     const requestedTaskId = req.params.taskId
 
     if (!requestedTaskId) {
-      return res.sendStatus(400)
+      return res.status(400).json({ message: "Missing task ID." })
     }
 
     const foundTask = await Task.findById(requestedTaskId)
 
     if (!foundTask) {
-      return res.sendStatus(404)
+      return res.status(404).json({ message: "Couldn't find task." })
     }
 
     await Task.findByIdAndDelete(foundTask._id)
     res.sendStatus(200)
   } catch (error) {
     console.error(error)
-    res.sendStatus(500)
+    res.status(500).json({ message: "There was a problem deleting the task." })
   }
 }
 

@@ -1,5 +1,6 @@
-const User = require("../models/User")
 const jwt = require("jsonwebtoken")
+
+const User = require("../models/User")
 
 const { JWT_SECRET, JWT_EXPIRY } = require("../utils")
 
@@ -9,7 +10,7 @@ const createUser = async (req, res) => {
     const foundUser = await User.findOne({ email: req.body.email })
 
     if (foundUser) {
-      return res.sendStatus(409)
+      return res.status(409).json({ message: "User already exists." })
     }
 
     const createdUser = await User.create(req.body)
@@ -27,7 +28,9 @@ const createUser = async (req, res) => {
     )
   } catch (error) {
     console.error(error)
-    res.sendStatus(400)
+    res
+      .status(500)
+      .json({ message: "There was a problem creating a new user." })
   }
 }
 
@@ -37,13 +40,17 @@ const loginUser = async (req, res) => {
     const foundUser = await User.findOne({ email: req.body.email })
 
     if (!foundUser) {
-      return res.sendStatus(400)
+      return res.status(401).json({
+        message: "Incorrect username or password.",
+      })
     }
 
     const isPasswordCorrect = await foundUser.checkPassword(req.body.password)
 
     if (!isPasswordCorrect) {
-      return res.sendStatus(400)
+      return res.status(401).json({
+        message: "Incorrect username or password.",
+      })
     }
 
     jwt.sign(
@@ -57,58 +64,8 @@ const loginUser = async (req, res) => {
     )
   } catch (error) {
     console.error(error)
-    res.sendStatus(400)
+    res.status(500).json({ message: "There was a problem logging you in." })
   }
 }
 
-// PUT /api/users/:id
-// const updateUser = async (req, res) => {
-//   try {
-//     const requestedUserId = req.params.id
-
-//     if (!requestedUserId) {
-//       return res.sendStatus(400)
-//     }
-
-//     const foundUser = User.findById(requestedUserId)
-
-//     if (!foundUser) {
-//       return res.sendStatus(404)
-//     }
-
-//     const updatedUser = await User.findByIdAndUpdate(foundUser._id, req.body, {
-//       new: true,
-//     })
-
-//     res.status(200).json(updatedUser)
-//   } catch (error) {
-//     console.error(error)
-//     res.sendStatus(500)
-//   }
-// }
-
-// DELETE /api/users/:id
-// const deleteUser = async (req, res) => {
-//   try {
-//     const requestedUserId = req.params.id
-
-//     if (!requestedUserId) {
-//       return res.sendStatus(400)
-//     }
-
-//     const foundUser = await User.findById(requestedUserId)
-
-//     if (!foundUser) {
-//       return res.sendStatus(404)
-//     }
-
-//     await User.findByIdAndDelete(foundUser._id)
-
-//     res.status(200)
-//   } catch (error) {
-//     console.error(error)
-//     res.sendStatus(500)
-//   }
-// }
-
-module.exports = { createUser, loginUser, /* updateUser, deleteUser */ }
+module.exports = { createUser, loginUser /* updateUser, deleteUser */ }

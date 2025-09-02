@@ -14,7 +14,7 @@ const createProject = async (req, res) => {
     res.status(201).json(newProject)
   } catch (error) {
     console.error(error)
-    res.sendStatus(500)
+    res.status(500).json({ message: "There was a problem creating a new project." })
   }
 }
 
@@ -28,7 +28,7 @@ const getAllProjects = async (req, res) => {
     res.status(200).json(allProjects)
   } catch (error) {
     console.error(error)
-    res.sendStatus(500)
+    res.status(500).json({ message: "There was a problem getting projects." })
   }
 }
 
@@ -38,19 +38,19 @@ const getProjectById = async (req, res) => {
     const requestedProjectId = req.params.id
 
     if (!requestedProjectId) {
-      return res.sendStatus(400)
+      return res.status(400).json({ message: "Missing project ID." })
     }
 
     const foundProject = await Project.findById(requestedProjectId)
 
     if (!foundProject) {
-      return res.sendStatus(404)
+      return res.status(404).json({ message: "Couldn't find project." })
     }
 
     res.status(200).json(foundProject)
   } catch (error) {
     console.error(error)
-    res.sendStatus(500)
+    res.status(500).json({ message: "There was a problem getting this project." })
   }
 }
 
@@ -60,13 +60,13 @@ const updateProject = async (req, res) => {
     const requestedProjectId = req.params.id
 
     if (!requestedProjectId) {
-      return res.sendStatus(400)
+      return res.status(400).json({ message: "Missing project ID." })
     }
 
     const foundProject = await Project.findById(requestedProjectId)
 
     if (!foundProject) {
-      return res.sendStatus(404)
+      return res.status(404).json({ message: "Couldn't find project." })
     }
 
     const updatedProject = await Project.findByIdAndUpdate(
@@ -78,7 +78,7 @@ const updateProject = async (req, res) => {
     res.status(200).json(updatedProject)
   } catch (error) {
     console.error(error)
-    res.sendStatus(500)
+    res.status(500).json({ message: "There was a problem getting this project." })
   }
 }
 
@@ -88,13 +88,13 @@ const deleteProject = async (req, res) => {
     const requestedProjectId = req.params.id
 
     if (!requestedProjectId) {
-      return res.sendStatus(400)
+      return res.status(400).json({ message: "Missing project ID." })
     }
 
     const foundProject = await Project.findById(requestedProjectId)
 
     if (!foundProject) {
-      return res.sendStatus(404)
+      return res.status(404).json({ message: "Couldn't find project." })
     }
 
     await Project.findByIdAndDelete(foundProject._id)
@@ -102,7 +102,7 @@ const deleteProject = async (req, res) => {
     res.sendStatus(200)
   } catch (error) {
     console.error(error)
-    res.sendStatus(500)
+    res.status(500).json({ message: "There was a problem deleting this project." })
   }
 }
 
@@ -111,10 +111,14 @@ const createTaskByProjectId = async (req, res) => {
   try {
     const requestedProjectId = req.params.projectId
 
+    if (!requestedProjectId) {
+      return res.status(400).json({ message: "Missing project ID." })
+    }
+
     const foundProject = await Project.findById(requestedProjectId)
 
     if (!foundProject) {
-      return res.sendStatus(404)
+      return res.status(404).json({ message: "Couldn't find tasks." })
     }
 
     const newTask = await Task.create({
@@ -125,7 +129,7 @@ const createTaskByProjectId = async (req, res) => {
     res.status(201).json(newTask)
   } catch (error) {
     console.error(error)
-    res.sendStatus(500)
+    res.status(500).json({ message: "There was a problem creating a new task." })
   }
 }
 
@@ -137,7 +141,7 @@ const getTasksByProjectId = async (req, res) => {
     const foundProject = await Project.findById(requestedProjectId)
 
     if (!foundProject) {
-      return res.sendStatus(404)
+      return res.status(404).json({ message: "Couldn't find tasks." })
     }
 
     const foundTasks = await Task.find({ project: requestedProjectId })
@@ -145,7 +149,7 @@ const getTasksByProjectId = async (req, res) => {
     res.status(200).json(foundTasks)
   } catch (error) {
     console.error(error)
-    res.sendStatus(500)
+    res.status(500).json({ message: "There was a problem getting tasks." })
   }
 }
 
