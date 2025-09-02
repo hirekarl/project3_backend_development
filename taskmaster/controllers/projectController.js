@@ -91,7 +91,7 @@ const deleteProject = async (req, res) => {
       return res.sendStatus(400)
     }
 
-    const foundProject = Project.findById(requestedProjectId)
+    const foundProject = await Project.findById(requestedProjectId)
 
     if (!foundProject) {
       return res.sendStatus(404)
