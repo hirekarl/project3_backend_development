@@ -1,5 +1,7 @@
 const Task = require("../models/Task")
 
+// TODO: Redo routes by spec.
+
 // GET /
 const getAllTasks = async (req, res) => {
   try {

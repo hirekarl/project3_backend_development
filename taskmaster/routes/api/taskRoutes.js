@@ -11,6 +11,7 @@ const {
   deleteTask,
 } = require("../../controllers/taskController")
 
+// TODO: Redo these routes per spec.
 router.get("/", authMiddleware, getAllTasks)
 router.post("/", authMiddleware, createTask)
 router.get("/:id", authMiddleware, userOwnsTask, getTaskById)
