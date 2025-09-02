@@ -5,13 +5,13 @@ const getAllProjects = async (req, res) => {
   try {
     const authenticatedUserId = req.user._id
 
-    const projects = Project.find({ user: authenticatedUserId })
+    const allProjects = Project.find({ user: authenticatedUserId })
 
-    if (projects.length < 1) {
+    if (allProjects.length < 1) {
       return res.sendStatus(404)
     }
 
-    res.status(200).json(projects)
+    res.status(200).json(allProjects)
   } catch (error) {
     console.error(error)
     res.sendStatus(500)
