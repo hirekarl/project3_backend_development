@@ -1,8 +1,9 @@
 const express = require("express")
 
 const connect = require("./config/connection")
-
 const { PORT } = require("./utils")
+
+const routes = require("./routes/api")
 
 const run = async () => {
   await connect()
@@ -11,7 +12,7 @@ const run = async () => {
 
   app.use(express.json())
 
-  // TODO
+  app.use("/api", routes)
 
   app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}.`)
