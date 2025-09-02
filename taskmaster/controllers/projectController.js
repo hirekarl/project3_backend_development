@@ -1,6 +1,23 @@
 const Project = require("../models/Project")
 
-// GET /
+// POST /api/projects
+const createProject = async (req, res) => {
+  try {
+    const authenticatedUserId = req.user._id
+
+    const newProject = await Project.create({
+      ...req.body,
+      user: authenticatedUserId,
+    })
+
+    res.status(201).json(newProject)
+  } catch (error) {
+    console.error(error)
+    res.sendStatus(500)
+  }
+}
+
+// GET /api/projects
 const getAllProjects = async (req, res) => {
   try {
     const authenticatedUserId = req.user._id
@@ -18,24 +35,7 @@ const getAllProjects = async (req, res) => {
   }
 }
 
-// POST /
-const createProject = async (req, res) => {
-  try {
-    const authenticatedUserId = req.user._id
-
-    const newProject = await Project.create({
-      ...req.body,
-      user: authenticatedUserId,
-    })
-
-    res.status(201).json(newProject)
-  } catch (error) {
-    console.error(error)
-    res.sendStatus(500)
-  }
-}
-
-// GET /:id
+// GET /api/projects/:id
 const getProjectById = async (req, res) => {
   try {
     const requestedProjectId = req.params.id
@@ -57,7 +57,7 @@ const getProjectById = async (req, res) => {
   }
 }
 
-// PUT /:id
+// PUT /api/projects/:id
 const updateProject = async (req, res) => {
   try {
     const requestedProjectId = req.params.id
@@ -85,7 +85,7 @@ const updateProject = async (req, res) => {
   }
 }
 
-// DELETE /:id
+// DELETE /api/projects/:id
 const deleteProject = async (req, res) => {
   try {
     const requestedProjectId = req.params.id
@@ -109,10 +109,30 @@ const deleteProject = async (req, res) => {
   }
 }
 
+// POST /api/projects/:projectId/tasks
+const createTaskByProjectId = async (req, res) => {
+  try {
+  } catch (error) {
+    console.error(error)
+    res.sendStatus(500)
+  }
+}
+
+// GET /api/projects/:projectId/tasks
+const getTasksByProjectId = async (req, res) => {
+  try {
+  } catch (error) {
+    console.error(error)
+    res.sendStatus(500)
+  }
+}
+
 module.exports = {
+  createProject,
   getAllProjects,
   getProjectById,
-  createProject,
   updateProject,
   deleteProject,
+  createTaskByProjectId,
+  getTasksByProjectId,
 }

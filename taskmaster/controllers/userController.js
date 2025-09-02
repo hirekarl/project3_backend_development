@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken")
 
 const { JWT_SECRET, JWT_EXPIRY } = require("../utils")
 
-// POST /
+// POST /api/users/register
 const createUser = async (req, res) => {
   try {
     const foundUser = await User.findOne({ email: req.body.email })
@@ -31,7 +31,7 @@ const createUser = async (req, res) => {
   }
 }
 
-// POST /login
+// POST /api/users/login
 const loginUser = async (req, res) => {
   try {
     const foundUser = await User.findOne({ email: req.body.email })
@@ -61,54 +61,54 @@ const loginUser = async (req, res) => {
   }
 }
 
-// PUT /:id
-const updateUser = async (req, res) => {
-  try {
-    const requestedUserId = req.params.id
+// PUT /api/users/:id
+// const updateUser = async (req, res) => {
+//   try {
+//     const requestedUserId = req.params.id
 
-    if (!requestedUserId) {
-      return res.sendStatus(400)
-    }
+//     if (!requestedUserId) {
+//       return res.sendStatus(400)
+//     }
 
-    const foundUser = User.findById(requestedUserId)
+//     const foundUser = User.findById(requestedUserId)
 
-    if (!foundUser) {
-      return res.sendStatus(404)
-    }
+//     if (!foundUser) {
+//       return res.sendStatus(404)
+//     }
 
-    const updatedUser = await User.findByIdAndUpdate(foundUser._id, req.body, {
-      new: true,
-    })
+//     const updatedUser = await User.findByIdAndUpdate(foundUser._id, req.body, {
+//       new: true,
+//     })
 
-    res.status(200).json(updatedUser)
-  } catch (error) {
-    console.error(error)
-    res.sendStatus(500)
-  }
-}
+//     res.status(200).json(updatedUser)
+//   } catch (error) {
+//     console.error(error)
+//     res.sendStatus(500)
+//   }
+// }
 
-// DELETE /:id
-const deleteUser = async (req, res) => {
-  try {
-    const requestedUserId = req.params.id
+// DELETE /api/users/:id
+// const deleteUser = async (req, res) => {
+//   try {
+//     const requestedUserId = req.params.id
 
-    if (!requestedUserId) {
-      return res.sendStatus(400)
-    }
+//     if (!requestedUserId) {
+//       return res.sendStatus(400)
+//     }
 
-    const foundUser = await User.findById(requestedUserId)
+//     const foundUser = await User.findById(requestedUserId)
 
-    if (!foundUser) {
-      return res.sendStatus(404)
-    }
+//     if (!foundUser) {
+//       return res.sendStatus(404)
+//     }
 
-    await User.findByIdAndDelete(foundUser._id)
+//     await User.findByIdAndDelete(foundUser._id)
 
-    res.status(200)
-  } catch (error) {
-    console.error(error)
-    res.sendStatus(500)
-  }
-}
+//     res.status(200)
+//   } catch (error) {
+//     console.error(error)
+//     res.sendStatus(500)
+//   }
+// }
 
-module.exports = { createUser, loginUser, updateUser, deleteUser }
+module.exports = { createUser, loginUser, /* updateUser, deleteUser */ }
