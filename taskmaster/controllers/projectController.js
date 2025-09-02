@@ -14,7 +14,9 @@ const createProject = async (req, res) => {
     res.status(201).json(newProject)
   } catch (error) {
     console.error(error)
-    res.status(500).json({ message: "There was a problem creating a new project." })
+    res
+      .status(500)
+      .json({ message: "There was a problem creating a new project." })
   }
 }
 
@@ -50,7 +52,9 @@ const getProjectById = async (req, res) => {
     res.status(200).json(foundProject)
   } catch (error) {
     console.error(error)
-    res.status(500).json({ message: "There was a problem getting this project." })
+    res
+      .status(500)
+      .json({ message: "There was a problem getting this project." })
   }
 }
 
@@ -78,7 +82,9 @@ const updateProject = async (req, res) => {
     res.status(200).json(updatedProject)
   } catch (error) {
     console.error(error)
-    res.status(500).json({ message: "There was a problem getting this project." })
+    res
+      .status(500)
+      .json({ message: "There was a problem getting this project." })
   }
 }
 
@@ -99,10 +105,12 @@ const deleteProject = async (req, res) => {
 
     await Project.findByIdAndDelete(foundProject._id)
 
-    res.sendStatus(200)
+    res.status(200).json({ message: "Project deleted." })
   } catch (error) {
     console.error(error)
-    res.status(500).json({ message: "There was a problem deleting this project." })
+    res
+      .status(500)
+      .json({ message: "There was a problem deleting this project." })
   }
 }
 
@@ -129,7 +137,9 @@ const createTaskByProjectId = async (req, res) => {
     res.status(201).json(newTask)
   } catch (error) {
     console.error(error)
-    res.status(500).json({ message: "There was a problem creating a new task." })
+    res
+      .status(500)
+      .json({ message: "There was a problem creating a new task." })
   }
 }
 
