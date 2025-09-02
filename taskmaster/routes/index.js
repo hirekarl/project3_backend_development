@@ -5,8 +5,8 @@ const userRoutes = require("./api/userRoutes")
 const projectRoutes = require("./api/projectRoutes")
 const taskRoutes = require("./api/taskRoutes")
 
-router.use("/user", userRoutes)
-router.use("/project", projectRoutes)
-router.use("/task", taskRoutes)
+router.use("/users", userRoutes)
+router.use("/projects", projectRoutes)
+router.use("/tasks", taskRoutes)
 
 module.exports = router
