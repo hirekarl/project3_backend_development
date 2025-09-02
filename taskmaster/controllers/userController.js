@@ -76,7 +76,7 @@ const updateUser = async (req, res) => {
       return res.sendStatus(404)
     }
 
-    const updatedUser = await User.findByIdAndUpdate(foundUser._id, {
+    const updatedUser = await User.findByIdAndUpdate(foundUser._id, req.body, {
       new: true,
     })
 
