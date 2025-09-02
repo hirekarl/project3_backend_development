@@ -33,11 +33,20 @@ const userSchema = new Schema(
   }
 )
 
-userSchema.pre("save", () => {
-  // TODO
+userSchema.pre("save", async function (next) {
+  if (this.isNew || this.isModified("password")) {
+    const saltRounds = 10
+    this.password = await bcrypt.hash(this.password, saltRounds)
+  }
+
+  next()
 })
 
-// TODO: Add that validation check for each update
+userSchema.methods.checkPassword = async function (password) {
+  return bcrypt.compare(password, this.password)
+}
+
+mongoose.set("runValidators", true)
 
 const User = model("User", userSchema)
 

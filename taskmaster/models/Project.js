@@ -17,7 +17,7 @@ const projectSchema = new Schema({
   },
 })
 
-// TODO: Add that validation check for each update
+mongoose.set("runValidators", true)
 
 const Project = model("Project", projectSchema)
 

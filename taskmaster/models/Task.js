@@ -24,7 +24,7 @@ const taskSchema = new Schema({
   },
 })
 
-// TODO: Add that validation check for each update
+mongoose.set("runValidators", true)
 
 const Task = model("Task", taskSchema)
 
