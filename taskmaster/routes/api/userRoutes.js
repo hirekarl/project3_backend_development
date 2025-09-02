@@ -10,7 +10,7 @@ const {
   deleteUser,
 } = require("../../controllers/userController")
 
-router.post("/", createUser)
+router.post("/register", createUser)
 router.post("/login", loginUser)
 router.put("/:id", authMiddleware, userOwnsUser, updateUser)
 router.delete("/:id", authMiddleware, userOwnsUser, deleteUser)
