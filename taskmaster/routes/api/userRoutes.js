@@ -1,6 +1,8 @@
 const express = require("express")
 const router = express.Router()
 
+const {authMiddleware} = require("../../utils/auth")
+
 const {
   createUser,
   loginUser,
@@ -10,7 +12,7 @@ const {
 
 router.post("/", createUser)
 router.post("/login", loginUser)
-router.put("/:id", updateUser)
-router.delete("/:id", deleteUser)
+router.put("/:id", authMiddleware, updateUser)
+router.delete("/:id", authMiddleware, deleteUser)
 
 module.exports = router
