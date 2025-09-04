@@ -9,34 +9,41 @@
 1. In the terminal, run:
 
 ```bash
-cd taskmaster && npm i && npm run dev
+cd taskmaster && npm i
 ```
 
-2. Run API requests against:
-- `http://localhost:3001/api/users`
-- `http://localhost:3001/api/projects`
-- `http://localhost:3001/api/tasks`
+2. Create a `.env` in `./taskmaster` with the following environment variables:
+- `MONGO_URI`: a MongoDB connection URL of the form `mongodb+srv://<username>:<password>@<clusterName>.mongodb.net/<databaseName>`
+- `JWT_SECRET`: a secret key for signing JSON web tokens (see, e.g., https://jwtsecrets.com/)
+- `PORT`: the port number on which to run the server; default is `3001`
+
+3. Run `npm run dev` from the `./taskmaster` directory
+
+4. Run API requests against:
+- `http://localhost:<PORT>/api/users`
+- `http://localhost:<PORT>/api/projects`
+- `http://localhost:<PORT>/api/tasks`
 
 ### Submission Source
 Top-level application behavior can be found in [`./taskmaster/server.js`](./taskmaster/server.js).
 
 ### API Routes
 #### Users
-- `POST` `http://localhost:3001/api/users/register`: create a new user
-- `POST` `http://localhost:3001/api/users/login`: login as an existing user
+- `POST` `http://localhost:<PORT>/api/users/register`: create a new user
+- `POST` `http://localhost:<PORT>/api/users/login`: login as an existing user
 
 #### Projects
-- `POST` `http://localhost:3001/api/projects`: create new project owned by currently logged-in user
-- `GET` `http://localhost:3001/api/projects`: get all projects owned by currently logged-in user
-- `GET` `http://localhost:3001/api/projects/:id`: get project by ID, restricted to projects owned by currently logged-in user
-- `PUT` `http://localhost:3001/api/projects/:id`: update project, restricted to modification by owner only
-- `DELETE` `http://localhost:3001/api/projects:id`: delete project, restricted to deletion by owner only
-- `POST` `http://localhost:3001/api/projects/:projectId/tasks`: create new task for project by ID, restricted to currently logged-in user as project owner
-- `GET` `http://localhost:3001/api/projects/:projectId/tasks`: get all tasks for project by ID, restricted to currently logged-in user as project owner
+- `POST` `http://localhost:<PORT>/api/projects`: create new project owned by currently logged-in user
+- `GET` `http://localhost:<PORT>/api/projects`: get all projects owned by currently logged-in user
+- `GET` `http://localhost:<PORT>/api/projects/:id`: get project by ID, restricted to projects owned by currently logged-in user
+- `PUT` `http://localhost:<PORT>/api/projects/:id`: update project, restricted to modification by owner only
+- `DELETE` `http://localhost:<PORT>/api/projects:id`: delete project, restricted to deletion by owner only
+- `POST` `http://localhost:<PORT>/api/projects/:projectId/tasks`: create new task for project by ID, restricted to currently logged-in user as project owner
+- `GET` `http://localhost:<PORT>/api/projects/:projectId/tasks`: get all tasks for project by ID, restricted to currently logged-in user as project owner
 
 #### Tasks
-- `PUT` `http://localhost:3001/api/tasks/:taskId`: update a single task, restricted to currently logged-in user as owner of parent project
-- `DELETE` `http://localhost:3001/api/tasks/:taskId`: delete a single task, restricted to currently logged-in user as owner of parent project
+- `PUT` `http://localhost:<PORT>/api/tasks/:taskId`: update a single task, restricted to currently logged-in user as owner of parent project
+- `DELETE` `http://localhost:<PORT>/api/tasks/:taskId`: delete a single task, restricted to currently logged-in user as owner of parent project
 
 ## Assignment
 You are a junior backend developer at “Productivity Inc.,” a startup building a new suite of productivity tools. Your first major assignment is to build the entire backend for their flagship product, TaskMaster. This API will be the engine that powers the entire application, handling user accounts, project management, and individual tasks.
